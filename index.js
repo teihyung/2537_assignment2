@@ -204,9 +204,7 @@ app.post('/loggingin', async (req,res) => {
 
     if (result.length != 1) {
         console.log("user not found");
-        var errorMsg = "Incorrect email or password.";
-        errorMsg += "<a href='/login'>try again</a>";
-        res.send(errorMsg);
+        res.redirect("/wrongPw");
         return;
     }
     if (await bcrypt.compare(password, result[0].password)) {
@@ -226,6 +224,10 @@ app.post('/loggingin', async (req,res) => {
         res.send(errorMsg);
         return;
     }
+});
+
+app.get('/wrongPw', (req, res) => {
+    res.render("wrongPw");
 });
 
 app.use('/loggedin', sessionValidation);
