@@ -145,7 +145,11 @@ app.get('/createUser', (req,res) => {
 
 
 app.get('/login', (req,res) => {
-    res.render("login");
+    if (req.session.authenticated) {
+        res.redirect('/members');
+    } else {
+        res.render("login");
+    }
 });
 
 app.post('/submitUser', async (req,res) => {
